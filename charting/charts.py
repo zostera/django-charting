@@ -1,65 +1,86 @@
 from __future__ import unicode_literals
+from collections import OrderedDict
+
 import json
+import uuid
+
+from .columns import BaseColumn
 
 
 class Chart(object):
-    queryset = None
+    id = None
     title = None
-    type = None
-    columns = [
-        {'label': 'Object', 'type': 'string'},
-        {'label': 'One', 'type': 'number'},
-    ]
+    data = None
+    queryset = None
 
-    def __init__(self, queryset=None, title=None):
-        if queryset is not None:
-            self.queryset = queryset
-        if title is not None:
-            self.title = title
+    # Private
+    _id = None
+
+    def get_element_id(self):
+        if not self._id:
+            if self.id:
+                self._id = self.id
+            else:
+                self._id = 'django-chart-{uuid}'.format(uuid=uuid.uuid4())
+        return self._id
 
     def get_title(self):
         return self.title
 
-    def get_queryset(self):
-        return self.queryset
-
-    def get_columns(self):
-        return self.columns
-
-    def get_row(self, item):
-        return {
-            'c': [
-                {'v': unicode(item)},
-                {'v': 1, 'f': '1', },
-            ]
-        }
-
-    def get_rows(self):
-        rows = []
-        for item in self.get_queryset().all():
-            rows.append(self.get_row(item))
-        return rows
-
-    def get_data(self):
-        data = {
-            'cols': self.get_columns(),
-            'rows': self.get_rows(),
-        }
-        return json.dumps(data)
-
     def get_type(self):
         return self.type
 
-    def get_width(self):
-        return 400
-
-    def get_height(self):
-        return 300
-
     def get_options(self):
-        options = {
-            'title': self.get_title(),
-            'width': self.get_width(),
-            'height': self.get_height(),
+        options = {}
+        title = self.get_title()
+        if title:
+            options['title'] = title
+
+    def get_queryset(self):
+        return self.queryset
+
+    def get_data(self):
+        if self.data:
+            return self.data
+        return self.get_queryset()
+
+    def get_data_table(self):
+        # Start with empty rows and columns
+        cols = []
+        rows = []
+        # Lookup for columns
+        columns = OrderedDict({})
+        # Get all attributes
+        attrs = dir(self)
+        # Walk the attributes in reversed order
+        for name in attrs[::-1]:
+            # We only need BaseColumns
+            column = self.__getattribute__(name)
+            if not isinstance(column, BaseColumn):
+                continue
+            # Set the accessor if it's not known
+            if not column.accessor:
+                column.accessor = name
+            cols.append(column.get_data_table_column(name))
+            columns[name] = column
+        for item in self.get_data():
+            cells = []
+            for name in columns:
+                cell = columns[name].get_data_table_cell(item)
+                cells.append(cell)
+            rows.append({'c': cells})
+        return {
+            'cols': cols,
+            'rows': rows,
+            'p': {},
         }
-        return json.dumps(options)
+
+
+    def get_chart_wrapper_data_as_json(self):
+        wrapper = {
+            'chartType': self.get_type(),
+            'dataTable': self.get_data_table(),
+            'options': self.get_options(),
+            'containerId': self.get_element_id(),
+        }
+        return json.dumps(wrapper)

@@ -1,45 +1,19 @@
-{#<script type="text/javascript" src="https://www.google.com/jsapi"></script>#}
-<script type="text/javascript" src='https://www.google.com/jsapi?autoload={"modules":[{"name":"visualization","version":"1"}]}'></script>
-<script type="text/javascript">
+{% if chart %}
+    <script type="text/javascript" src="//www.google.com/jsapi"></script>
+    {% with element_id=chart.get_element_id %}
 
-{#    // Load the Visualization API and the piechart package.#}
-{#    google.load('visualization', '1.0', {'packages': ['corechart']});#}
+        <script type="text/javascript">
+            (function () {
+                google.load('visualization', '1');   // Don't need to specify chart libraries!
 
-    // Set a callback to run when the Google Visualization API is loaded.
-    google.setOnLoadCallback(drawChart);
+                google.setOnLoadCallback(drawVisualization);
 
-    // Callback that creates and populates a data table,
-    // instantiates the pie chart, passes in the data and
-    // draws it.
-    function drawChart() {
-        // Create the data table.
-        var data = new google.visualization.DataTable({{ chart.get_data|safe }});
-{#        data.addColumn('string', 'Topping');#}
-{#        data.addColumn('number', 'Slices');#}
-{#        data.addRows([#}
-{#            ['Mushrooms', 3],#}
-{#            ['Onions', 1],#}
-{#            ['Olives', 1],#}
-{#            ['Zucchini', 1],#}
-{#            ['Pepperoni', 2]#}
-{#        ]);#}
-
-        // Set chart options
-        var options = {{ chart.get_options|safe }};
-
-        var wrap = new google.visualization.ChartWrapper();
-        wrap.setChartType('{{ chart.get_type|escapejs }}');
-        wrap.setDataTable(data);
-        wrap.setOptions(options);
-        wrap.setContainerId('chart_div');
-        google.visualization.events.addListener(wrap, 'ready', function () {
-            document.getElementById('print_div').innerHTML = '<a href="' + wrap.getChart().getImageURI() + '">print</a>';
-        });
-        var chart = wrap.draw();
-{#        // Instantiate and draw our chart, passing in some options.#}
-{#        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));#}
-{#        chart.draw(data, options);#}
-    }
-</script>
-<div id="chart_div"></div>
-<div id="print_div"></div>
+                function drawVisualization() {
+                    var wrapper = new google.visualization.ChartWrapper({{ chart.get_chart_wrapper_data_as_json|safe }});
+                    wrapper.draw();
+                }
+            })()
+        </script>
+        <div class="django-charting django-charting-chart" id="{{ element_id }}"></div>
+    {% endwith %}
+{% endif %}
