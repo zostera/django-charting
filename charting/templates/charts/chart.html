@@ -4,14 +4,44 @@
 
         <script type="text/javascript">
             (function () {
-                google.load('visualization', '1');   // Don't need to specify chart libraries!
 
-                google.setOnLoadCallback(drawVisualization);
+                // Variables for wrapper, chart and wrapper data
+                var wrapper, chart, wrapperOptions = {{ chart.get_chart_wrapper_data_as_json|safe }};
 
-                function drawVisualization() {
-                    var wrapper = new google.visualization.ChartWrapper({{ chart.get_chart_wrapper_data_as_json|safe }});
-                    wrapper.draw();
+                // Don't need to specify chart libraries!
+                google.load('visualization', '1');
+
+                // Draw the charts after the library has been loaded
+                google.setOnLoadCallback(drawChart);
+
+                // Execute when chart is ready
+                function onReady(wrapper) {
+                    chart = wrapper.getChart();
                 }
+
+                // Draw the chart and redraw on resize
+                function drawChart() {
+                    // Draw the chart
+                    _drawChart();
+                    // Reload on resize, for responsive design
+                    if ($) {
+                        $(window).resize(_drawChart);
+                    }
+                }
+
+                // Draw the chart
+                function _drawChart() {
+                    if (wrapperOptions.dataTable.rows.length) {
+                        wrapper = new google.visualization.ChartWrapper(wrapperOptions);
+                        // Must wait for the ready event in order to subscribe to events
+                        google.visualization.events.addListener(wrapper, 'ready', function () {
+                            onReady(wrapper);
+                        });
+                        // Draw the chart
+                        wrapper.draw();
+                    }
+                }
+
             })()
         </script>
         <div class="django-charting django-charting-chart" id="{{ element_id }}"></div>

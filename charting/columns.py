@@ -4,6 +4,7 @@ from django.utils.text import slugify
 
 
 class BaseColumn(object):
+    _sort_by_creation = 0
     type = None
     accessor = None
 
@@ -11,6 +12,8 @@ class BaseColumn(object):
         super(BaseColumn, self).__init__()
         if accessor is not None:
             self.accessor = accessor
+        self._sort_order = BaseColumn._sort_by_creation
+        BaseColumn._sort_by_creation += 1
 
     def get_id(self, name):
         return slugify(name)
@@ -41,7 +44,7 @@ class BaseColumn(object):
             return None
         # Get value from object or dict
         try:
-            value = item.__get_attribute__(self.accessor)
+            value = getattr(item, self.accessor)
         except AttributeError:
             try:
                 value = item.get(self.accessor)
@@ -59,6 +62,13 @@ class BaseColumn(object):
 class StringColumn(BaseColumn):
     type = 'string'
 
+    def get_value(self, value):
+        return unicode(value)
+
 
 class NumberColumn(BaseColumn):
     type = 'number'
+
+
+class DateColumn(BaseColumn):
+    type = 'date'

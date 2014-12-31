@@ -1,9 +1,8 @@
 from __future__ import unicode_literals
-from collections import OrderedDict
 
-import json
 import uuid
 
+from .utils import json_encode
 from .columns import BaseColumn
 
 
@@ -15,6 +14,12 @@ class Chart(object):
 
     # Private
     _id = None
+
+    def __init__(self, queryset=None):
+        super(Chart, self).__init__()
+        if queryset is not None:
+            self.queryset = queryset
+
 
     def get_element_id(self):
         if not self._id:
@@ -35,6 +40,7 @@ class Chart(object):
         title = self.get_title()
         if title:
             options['title'] = title
+        return options
 
     def get_queryset(self):
         return self.queryset
@@ -49,24 +55,30 @@ class Chart(object):
         cols = []
         rows = []
         # Lookup for columns
-        columns = OrderedDict({})
-        # Get all attributes
-        attrs = dir(self)
+        columns = []
         # Walk the attributes in reversed order
-        for name in attrs[::-1]:
+        for name in dir(self):
             # We only need BaseColumns
-            column = self.__getattribute__(name)
+            column = getattr(self, name)
             if not isinstance(column, BaseColumn):
                 continue
             # Set the accessor if it's not known
             if not column.accessor:
                 column.accessor = name
-            cols.append(column.get_data_table_column(name))
-            columns[name] = column
+            columns.append({
+                'name': name,
+                'sort_order': column._sort_order,
+                'column': column,
+                'data': column.get_data_table_column(name),
+            })
+        # Sort columns
+        columns = sorted(columns, key=lambda x: x['sort_order'])
+        for column in columns:
+            cols.append(column['data'])
         for item in self.get_data():
             cells = []
-            for name in columns:
-                cell = columns[name].get_data_table_cell(item)
+            for column in columns:
+                cell = column['column'].get_data_table_cell(item)
                 cells.append(cell)
             rows.append({'c': cells})
         return {
@@ -75,7 +87,6 @@ class Chart(object):
             'p': {},
         }
 
-
     def get_chart_wrapper_data_as_json(self):
         wrapper = {
             'chartType': self.get_type(),
@@ -83,4 +94,4 @@ class Chart(object):
             'options': self.get_options(),
             'containerId': self.get_element_id(),
         }
-        return json.dumps(wrapper)
+        return json_encode(wrapper)

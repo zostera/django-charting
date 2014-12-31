@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 from charts import Chart
 from columns import BaseColumn, StringColumn, NumberColumn
 
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 
 __charts__ = ['Chart', ]
 
