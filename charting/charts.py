@@ -20,7 +20,6 @@ class Chart(object):
         if queryset is not None:
             self.queryset = queryset
 
-
     def get_element_id(self):
         if not self._id:
             if self.id:
