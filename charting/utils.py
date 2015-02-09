@@ -1,7 +1,6 @@
 from __future__ import unicode_literals
 
 import json
-import datetime
 
 
 class ChartingJSONEncoder(json.JSONEncoder):

@@ -2,8 +2,7 @@ from __future__ import unicode_literals
 
 import uuid
 
-from app.charting.utils import get_javascript_object
-
+from .utils import get_javascript_object
 from .columns import BaseColumn
 
 
