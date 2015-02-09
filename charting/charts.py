@@ -2,7 +2,8 @@ from __future__ import unicode_literals
 
 import uuid
 
-from .utils import json_encode
+from app.charting.utils import get_javascript_object
+
 from .columns import BaseColumn
 
 
@@ -19,6 +20,7 @@ class Chart(object):
         super(Chart, self).__init__()
         if queryset is not None:
             self.queryset = queryset
+
 
     def get_element_id(self):
         if not self._id:
@@ -78,6 +80,12 @@ class Chart(object):
             cells = []
             for column in columns:
                 cell = column['column'].get_data_table_cell(item)
+                try:
+                    render = getattr(self, 'render_{name}'.format(name=column['name']))
+                except AttributeError:
+                    pass
+                else:
+                    cell = render(cell=cell, item=item)
                 cells.append(cell)
             rows.append({'c': cells})
         return {
@@ -93,4 +101,4 @@ class Chart(object):
             'options': self.get_options(),
             'containerId': self.get_element_id(),
         }
-        return json_encode(wrapper)
+        return get_javascript_object(wrapper)

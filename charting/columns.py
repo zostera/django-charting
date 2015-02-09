@@ -7,18 +7,21 @@ class BaseColumn(object):
     _sort_by_creation = 0
     type = None
     accessor = None
+    label = None
 
-    def __init__(self, accessor=None):
+    def __init__(self, *args, **kwargs):
         super(BaseColumn, self).__init__()
-        if accessor is not None:
-            self.accessor = accessor
         self._sort_order = BaseColumn._sort_by_creation
+        self.accessor = kwargs.get('accessor', None)
+        self.label = kwargs.get('label', None)
         BaseColumn._sort_by_creation += 1
 
     def get_id(self, name):
         return slugify(name)
 
     def get_label(self, name):
+        if self.label:
+            return unicode(self.label)
         return name
 
     def get_type(self):
@@ -68,6 +71,9 @@ class StringColumn(BaseColumn):
 
 class NumberColumn(BaseColumn):
     type = 'number'
+
+    def get_value(self, value):
+        return float(value)
 
 
 class DateColumn(BaseColumn):
