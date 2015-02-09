@@ -1,23 +1,21 @@
 from __future__ import unicode_literals
 
 import json
-import datetime
 
 
 class ChartingJSONEncoder(json.JSONEncoder):
     """
     JSON encoder that handles date/time/datetime objects correctly.
     """
-
-    def __init__(self):
-        json.JSONEncoder.__init__(self, separators=(",", ":"), ensure_ascii=False)
-
     def default(self, obj):
-        if isinstance(obj, datetime.datetime):
-            return obj.isoformat()
-        else:
-            return super(ChartingJSONEncoder, self).default(obj)
+        if hasattr(obj, 'isoformat'):
+            return '__DATE__' + obj.isoformat() + '__DATE__'
+        try:
+            return json.JSONEncoder.default(self, obj)
+        except TypeError:
+            # This catches __proxy__object (lazy translations)
+            return unicode(obj)
 
 
-def json_encode(value):
-    return json.dumps(value, cls=ChartingJSONEncoder)
+def get_javascript_object(value):
+    return json.dumps(value, cls=ChartingJSONEncoder).replace('"__DATE__', 'new Date("').replace('__DATE__"', '")')
