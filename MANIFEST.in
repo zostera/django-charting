@@ -1,5 +1,7 @@
 include LICENSE
 include README.rst
+include HISTORY.rst
 recursive-include charting/static *
 recursive-include charting/templates *
+recursive-include charting/templatetags *
 recursive-include docs *

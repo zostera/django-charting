@@ -12,4 +12,4 @@ class DemoChart(Chart):
     title = 'My demo'
 
     project = StringColumn()
-    countx = NumberColumn(accessor='count')
+    count = NumberColumn(accessor='count')
