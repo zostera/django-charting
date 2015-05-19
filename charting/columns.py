@@ -1,7 +1,5 @@
 from __future__ import unicode_literals
 
-from django.utils.text import slugify
-
 
 class BaseColumn(object):
     _sort_by_creation = 0
