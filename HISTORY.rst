@@ -3,10 +3,11 @@
 History
 -------
 
-0.1.4 (2015-05-19)
+0.1.6 (2015-05-19)
 ++++++++++++++++++
 
 * Fix Django dependancy in setup
+* Fix versioning
 
 
 0.1.2 (2015-02-09)

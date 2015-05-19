@@ -6,10 +6,7 @@ import sys
 
 import charting
 
-try:
-    from setuptools import setup
-except ImportError:
-    from distutils.core import setup
+from setuptools import setup
 
 version = charting.__version__
 
@@ -36,11 +33,11 @@ setup(
     author_email='dylan@zostera.nl',
     url='https://github.com/zostera/django-charts',
     packages=[
-        'charting',
+        "charting",
     ],
     include_package_data=True,
     install_requires=[
-        'django>1.4',
+        "Django > 1.4",
     ],
     license="Apache License 2.0",
     zip_safe=False,
