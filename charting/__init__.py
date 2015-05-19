@@ -1,9 +1,13 @@
 from __future__ import unicode_literals
 
-from charts import Chart
-from columns import BaseColumn, StringColumn, NumberColumn
+try:
+    from .charts import Chart
+    from .columns import BaseColumn, StringColumn, NumberColumn
+except ImportError:
+    pass
 
-__version__ = '0.1.7'
+
+__version__ = '0.1.8'
 
 __charts__ = ['Chart', ]
 
