@@ -11,7 +11,7 @@ from setuptools import setup
 version = charting.__version__
 
 if sys.argv[-1] == 'publish':
-    os.system('cd docs && make html')
+    # os.system('cd docs && make html')
     os.system('python setup.py sdist upload')
     print("You probably want to also tag the version now:")
     print("  git tag -a %s -m 'version %s'" % (version, version))
