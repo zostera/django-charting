@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
 from django.utils.text import slugify
+from django.utils.six import text_type
 
 
 class BaseColumn(object):
@@ -21,14 +22,14 @@ class BaseColumn(object):
 
     def get_label(self, name):
         if self.label:
-            return unicode(self.label)
+            return text_type(self.label)
         return name
 
     def get_type(self):
-        return unicode(self.type)
+        return text_type(self.type)
 
     def get_data_table_column(self, name):
-        unicode_name = unicode(name)
+        unicode_name = text_type(name)
         return {
             'id': self.get_id(unicode_name),
             'label': self.get_label(unicode_name),
@@ -66,7 +67,7 @@ class StringColumn(BaseColumn):
     type = 'string'
 
     def get_value(self, value):
-        return unicode(value)
+        return text_type(value)
 
 
 class NumberColumn(BaseColumn):

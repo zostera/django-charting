@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
 import json
+from django.utils.six import text_type
 
 
 class ChartingJSONEncoder(json.JSONEncoder):
@@ -14,7 +15,7 @@ class ChartingJSONEncoder(json.JSONEncoder):
             return json.JSONEncoder.default(self, obj)
         except TypeError:
             # This catches __proxy__object (lazy translations)
-            return unicode(obj)
+            return text_type(obj)
 
 
 def get_javascript_object(value):
