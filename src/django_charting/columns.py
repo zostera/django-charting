@@ -1,7 +1,4 @@
-from __future__ import unicode_literals
-
 from django.utils.text import slugify
-from django.utils.six import text_type
 
 
 class BaseColumn(object):
@@ -13,8 +10,8 @@ class BaseColumn(object):
     def __init__(self, *args, **kwargs):
         super(BaseColumn, self).__init__()
         self._sort_order = BaseColumn._sort_by_creation
-        self.accessor = kwargs.get('accessor', None)
-        self.label = kwargs.get('label', None)
+        self.accessor = kwargs.get("accessor", None)
+        self.label = kwargs.get("label", None)
         BaseColumn._sort_by_creation += 1
 
     def get_id(self, name):
@@ -22,18 +19,18 @@ class BaseColumn(object):
 
     def get_label(self, name):
         if self.label:
-            return text_type(self.label)
+            return f"{self.label}"
         return name
 
     def get_type(self):
-        return text_type(self.type)
+        return f"{self.type}"
 
     def get_data_table_column(self, name):
-        unicode_name = text_type(name)
+        unicode_name = f"{name}"
         return {
-            'id': self.get_id(unicode_name),
-            'label': self.get_label(unicode_name),
-            'type': self.get_type(),
+            "id": self.get_id(unicode_name),
+            "label": self.get_label(unicode_name),
+            "type": self.get_type(),
         }
 
     def get_value(self, value):
@@ -56,26 +53,26 @@ class BaseColumn(object):
                 value = None
         # Get various presentations
         value = self.get_value(value)
-        cell = {'v': value}
+        cell = {"v": value}
         string = self.get_string(value)
         if string is not None:
-            cell['f'] = string
+            cell["f"] = string
         return cell
 
 
 class StringColumn(BaseColumn):
-    type = 'string'
+    type = "string"
 
     def get_value(self, value):
-        return text_type(value)
+        return f"{value}"
 
 
 class NumberColumn(BaseColumn):
-    type = 'number'
+    type = "number"
 
     def get_value(self, value):
         return float(value)
 
 
 class DateColumn(BaseColumn):
-    type = 'date'
+    type = "date"
