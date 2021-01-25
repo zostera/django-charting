@@ -8,7 +8,7 @@ class BaseColumn(object):
     label = None
 
     def __init__(self, *args, **kwargs):
-        super(BaseColumn, self).__init__()
+        super().__init__()
         self._sort_order = BaseColumn._sort_by_creation
         self.accessor = kwargs.get("accessor", None)
         self.label = kwargs.get("label", None)
