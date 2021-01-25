@@ -12,7 +12,7 @@ jobs:
             python-version: 3.8
       - uses: actions/checkout@v2
 
-      - run: pip install -U tox coverage
+      - run: pip install -U tox
 
       - name: Test with tox
         run: tox -e docs
@@ -25,7 +25,7 @@ jobs:
             python-version: 3.8
       - uses: actions/checkout@v2
 
-      - run: pip install -U tox coverage
+      - run: pip install -U tox
 
       - name: Test with tox
         run: tox -e lint
