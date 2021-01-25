@@ -44,7 +44,7 @@ class DemoChart(Chart):
 3. Render the chart in a template like this:
 
 ```
-{% load charting %}
+{% load django_charting %}
 
 {% render_chart chart %}
 ```
