@@ -1,4 +1,4 @@
-from src.django_charting import Chart, NumberColumn, StringColumn
+from django_charting import Chart, NumberColumn, StringColumn
 
 
 class DemoChart(Chart):

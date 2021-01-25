@@ -1,10 +1,11 @@
 django-charting
 ===============
 
-Charting for Django
+Simple charting for Django
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
    installation
+   quickstart

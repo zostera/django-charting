@@ -1,16 +1,28 @@
-import os
-import sys
+from os.path import abspath, dirname
 
-BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ""))
-
-# Include SRC_FOLDER in path
-SRC_FOLDER = os.path.abspath(os.path.join(BASE_DIR, "..", "src"))
-if SRC_FOLDER not in sys.path:
-    sys.path.insert(0, SRC_FOLDER)
+BASE_DIR = dirname(abspath(__file__))
 
 SECRET_KEY = "Thank you for using django-charting!"
+
 DEBUG = True
+
 ALLOWED_HOSTS = []
+
+DATABASES = {"default": {"ENGINE": "django.db.backends.sqlite3", "NAME": ":memory:"}}
+
+LANGUAGE_CODE = "en-us"
+
+TIME_ZONE = "UTC"
+
+USE_I18N = True
+
+USE_L10N = True
+
+USE_TZ = True
+
+STATIC_URL = "/static/"
+
+ROOT_URLCONF = "app.urls"
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -20,7 +32,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django_charting",
-    "tests.app",
+    "app",
 ]
 
 MIDDLEWARE = [
@@ -33,7 +45,6 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "tests.app.urls"
 
 TEMPLATES = [
     {
@@ -50,19 +61,3 @@ TEMPLATES = [
         },
     }
 ]
-
-WSGI_APPLICATION = "tests.app.wsgi.application"
-
-DATABASES = {"default": {"ENGINE": "django.db.backends.sqlite3", "NAME": ":memory:"}}
-
-LANGUAGE_CODE = "en-us"
-
-TIME_ZONE = "UTC"
-
-USE_I18N = True
-
-USE_L10N = True
-
-USE_TZ = True
-
-STATIC_URL = "/static/"

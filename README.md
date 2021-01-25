@@ -1,24 +1,23 @@
-===============
-django-charting
-===============
+# django-charting
 
-Make charts simple.
+Simple charts for Django.
 
-
-Installation
-------------
+## Installation
 
 Install `django-charting` using `pip`
 
-    pip install django-charting
+```shell
+pip install django-charting
+```
 
+## Quickstart
 
-Quick start
------------
+1. Add "django_charting" to your INSTALLED_APPS setting like this::
 
-1. Add "charting" to your INSTALLED_APPS setting like this::
-
-    INSTALLED_APPS = (
-        ...
-        'charting',
-    )
+```python
+INSTALLED_APPS = (
+    # ...
+    "django_charting",
+    # ...
+)
+```

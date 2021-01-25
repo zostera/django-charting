@@ -1,18 +1,12 @@
 from django.test import TestCase
 
-from django_charting import Chart, __version__
+from django_charting import Chart
 
 TEST_TITLE = "test_titlé"
 
 
 class TestChart(Chart):
     title = TEST_TITLE
-
-
-class VersionTestCase(TestCase):
-    def test_version(self):
-        """Test version."""
-        self.assertEqual(__version__, "1.0.0")
 
 
 class ChartTestCase(TestCase):
