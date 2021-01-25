@@ -2,46 +2,6 @@
 requires = ["setuptools >= 40.6.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
-[tool.poetry]
-name = "django-charting"
-version = "0.1.9"
-description = "Charts for Django using Google Charts API"
-homepage = "https://github.com/zostera/django-charting"
-repository = "https://github.com/zostera/django-charting"
-documentation = "https://django-charting.readthedocs.io/"
-authors = ["Dylan Verheul <dylan@zostera.nl>"]
-license = "BSD-3-Clause"
-readme = "README.md"
-keywords= ["django", "charting", "django-charting"]
-classifiers=[
-    "Development Status :: 5 - Production/Stable",
-    "Environment :: Web Environment",
-    "Framework :: Django :: 2.2",
-    "Framework :: Django :: 3.0",
-    "Framework :: Django :: 3.1",
-    "Framework :: Django",
-    "Intended Audience :: Developers",
-    "License :: OSI Approved :: BSD License",
-    "Operating System :: OS Independent",
-    "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.6",
-    "Programming Language :: Python :: 3.7",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
-    "Topic :: Utilities",
-]
-packages = [
-    { include = "django_charting", from = "src" },
-    { include = "docs", format = "sdist" },
-    { include = "tests", format = "sdist" },
-]
-include = ["LICENSE"]
-
-
-
-[tool.poetry.extras]
-docs = ["sphinx", "sphinx_rtd_theme", "m2r2"]
-
 [tool.black]
 line-length = 120
 target-version = ["py36"]
