@@ -1,7 +1,7 @@
 django-charting
 ===============
 
-Simple charting for Django
+Charts for Django using Google Charts API using Google Charts API
 
 .. toctree::
    :maxdepth: 2

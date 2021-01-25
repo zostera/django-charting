@@ -13,7 +13,7 @@ setup(
     name="django-charting",
     zip_safe=False,
     version="1.0.0",
-    description="Charts for Django using google charts API",
+    description="Charts for Django using Google Charts API",
     long_description=README,
     long_description_content_type="text/markdown",
     url="https://github.com/zostera/django-charting",

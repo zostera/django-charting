@@ -1,6 +1,6 @@
 # django-charting
 
-Simple charts for Django.
+Charts for Django using Google Charts API.
 
 ## Installation
 

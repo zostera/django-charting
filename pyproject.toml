@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [tool.poetry]
 name = "django-charting"
 version = "0.1.9"
-description = "charting for Django"
+description = "Charts for Django using Google Charts API"
 homepage = "https://github.com/zostera/django-charting"
 repository = "https://github.com/zostera/django-charting"
 documentation = "https://django-charting.readthedocs.io/"
