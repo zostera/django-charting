@@ -1,5 +1,5 @@
 from django_charting.charts import Chart
-from django_charting.columns import BaseColumn, NumberColumn, StringColumn
+from django_charting.columns import BaseColumn, DateColumn, NumberColumn, StringColumn
 
 try:
     from importlib.metadata import metadata
@@ -16,4 +16,5 @@ __all__ = [
     "BaseColumn",
     "StringColumn",
     "NumberColumn",
+    "DateColumn",
 ]

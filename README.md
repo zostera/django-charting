@@ -47,7 +47,7 @@ class DemoChart(Chart):
 ```
 
 
-3, Render the chart in a template like this:
+3. Render the chart in a template like this:
 
 ```
 {% load charting %}
