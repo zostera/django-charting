@@ -3,6 +3,7 @@
 ## 1.0.0 (in development)
 
 * Rename module `charting` to `django_charting`
+* Merge temaplte tag libraries and rename to `django_charting`
 * Drop support for Python 2
 * Limit Django versions to 2.2, 3.0, 3.1
 * Use src layout
