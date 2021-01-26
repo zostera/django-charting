@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools >= 40.6.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.black]
+line-length = 120
+target-version = ["py36"]
+
+[tool.coverage.run]
+branch = true
+source = ["django_charting"]
+
+[tool.coverage.paths]
+source = ["src", ".tox/*/site-packages"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+combine_as_imports = true
+line_length = 120
+skip_glob = "*/migrations/*.py"
+known_first_party = ["django_charting"]
+known_third_party = ["django"]
+src_paths = ["*.py", "charting", "tests", "example"]

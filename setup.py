@@ -1,60 +1,48 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+import pathlib
 
-import os
-import sys
+from setuptools import find_packages, setup
 
-import charting
+# The directory containing this file
+HERE = pathlib.Path(__file__).parent
 
-from setuptools import setup
+# The text of the README file
+README = (HERE / "README.md").read_text()
 
-version = charting.__version__
-
-if sys.argv[-1] == 'publish':
-    os.system('cd docs && make html')
-    os.system('python setup.py sdist upload')
-    print("You probably want to also tag the version now:")
-    print("  git tag -a %s -m 'version %s'" % (version, version))
-    print("  git push --tags")
-    sys.exit()
-
-with open('README.rst') as readme_file:
-    readme = readme_file.read()
-
-with open('HISTORY.rst') as history_file:
-    history = history_file.read().replace('.. :changelog:', '')
-
+# This call to setup() does all the work
 setup(
-    name='django-charting',
-    version=version,
-    description="""Charts for Django made simple""",
-    long_description=readme + '\n\n' + history,
-    author='Dylan Verheul',
-    author_email='dylan@zostera.nl',
-    url='https://github.com/zostera/django-charts',
-    packages=[
-        "charting",
-    ],
-    include_package_data=True,
-    install_requires=[
-        "Django > 1.4",
-    ],
-    license="Apache License 2.0",
+    name="django-charting",
     zip_safe=False,
-    keywords='django-charting',
+    version="1.0.0",
+    description="Charts for Django using Google Charts API",
+    long_description=README,
+    long_description_content_type="text/markdown",
+    url="https://github.com/zostera/django-charting",
+    author="Dylan Verheul",
+    author_email="dylan@dyve.net",
+    license="BSD-3-Clause",
+    packages=find_packages(where="src"),
+    package_dir={"": "src"},
+    include_package_data=True,
     classifiers=[
-        'Development Status :: 4 - Beta',
-        'Intended Audience :: Developers',
-        'License :: OSI Approved :: Apache Software License',
-        'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.6',
-        'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.3',
-        'Operating System :: OS Independent',
-        'Topic :: Software Development :: Libraries',
-        'Topic :: Utilities',
-        'Environment :: Web Environment',
-        'Framework :: Django',
+        "Development Status :: 5 - Production/Stable",
+        "Environment :: Web Environment",
+        "Framework :: Django :: 2.2",
+        "Framework :: Django :: 3.0",
+        "Framework :: Django :: 3.1",
+        "Framework :: Django",
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: BSD License",
+        "Operating System :: OS Independent",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
+        "Topic :: Utilities",
+    ],
+    python_requires=">=3.6",
+    install_requires=[
+        "Django>=2.2",
+        'importlib-metadata<3; python_version<"3.8"',
     ],
 )
