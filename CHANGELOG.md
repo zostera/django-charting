@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.0.0 (in development)
+## 1.0.0 (2021-01-26)
 
 * Rename module `charting` to `django_charting`
 * Merge temaplte tag libraries and rename to `django_charting`

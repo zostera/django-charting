@@ -44,4 +44,4 @@ build: docs
 	python setup.py sdist bdist_wheel
 
 publish: porcelain branch build
-	twinesomething
+	twine upload dist/*
