@@ -12,7 +12,7 @@ README = (HERE / "README.md").read_text()
 setup(
     name="django-charting",
     zip_safe=False,
-    version="1.0.0",
+    version="2.0.0",
     description="Charts for Django using Google Charts API",
     long_description=README,
     long_description_content_type="text/markdown",
@@ -27,8 +27,8 @@ setup(
         "Development Status :: 5 - Production/Stable",
         "Environment :: Web Environment",
         "Framework :: Django :: 2.2",
-        "Framework :: Django :: 3.0",
         "Framework :: Django :: 3.1",
+        "Framework :: Django :: 3.2",
         "Framework :: Django",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: BSD License",

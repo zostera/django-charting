@@ -1,6 +1,6 @@
 name: CI
 
-on: [push]
+on: [ push ]
 
 jobs:
 
@@ -9,7 +9,7 @@ jobs:
     steps:
       - uses: actions/setup-python@v2
         with:
-            python-version: 3.8
+          python-version: 3.8
       - uses: actions/checkout@v2
 
       - run: pip install -U tox
@@ -22,7 +22,7 @@ jobs:
     steps:
       - uses: actions/setup-python@v2
         with:
-            python-version: 3.8
+          python-version: 3.8
       - uses: actions/checkout@v2
 
       - run: pip install -U tox
@@ -33,7 +33,6 @@ jobs:
   test:
     name: Python ${{ matrix.python-version }}
     runs-on: ubuntu-latest
-
     strategy:
       max-parallel: 5
       matrix:
@@ -48,7 +47,31 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - run: pip install -U tox coverage
+      - run: pip install -U pip
+      - run: pip install -U tox coverage coveralls
 
       - name: Test with tox
         run: tox -e py
+
+      - name: Coverage combine
+        run: coverage combine
+
+      - name: Coverage report
+        run: coverage report
+
+      - name: Upload coveralls
+        env:
+          COVERALLS_PARALLEL: true
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: coveralls --service=github
+
+  coveralls:
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Coveralls Finished
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          parallel-finished: true
