@@ -27,4 +27,14 @@ line_length = 120
 skip_glob = "*/migrations/*.py"
 known_first_party = ["django_charting"]
 known_third_party = ["django"]
-src_paths = ["*.py", "charting", "tests", "example"]
+
+[tool.pydocstyle]
+# Explanation of rules that are ignored:
+# D1: Missing docstring error codes
+# D202: No blank lines allowed after function docstring
+# D301: Use r”“” if any backslashes in a docstring
+# D413: Missing blank line after last section
+# Ignore D1 because not every function and class has a docstring
+# Ignore D413 and D202 because they do not play nice with docformatter
+# Ignore D301 until we know how we want to deal with backslashes in docstrings.
+add_ignore = ["D1", "D202", "D301", "D413"]
