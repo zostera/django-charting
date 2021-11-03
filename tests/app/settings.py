@@ -1,5 +1,7 @@
 SECRET_KEY = "Thanks for using django-charting!"
 
+USE_TZ = True
+
 DEBUG = True
 
 DATABASES = {"default": {"ENGINE": "django.db.backends.sqlite3", "NAME": ":memory:"}}

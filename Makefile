@@ -19,7 +19,7 @@ reformat:
 
 lint:
 	flake8 ${PYTHON_SOURCES}
-	pydocstyle --add-ignore=D1,D202,D301,D413 ${PYTHON_SOURCES}
+	pydocstyle ${PYTHON_SOURCES}
 
 docs:
 	cd docs && sphinx-build -b html -d _build/doctrees . _build/html
