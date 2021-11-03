@@ -1,11 +1,12 @@
 from django.test import TestCase
 
 
-class BaseTest(TestCase):
-    """Test the Font Awesome Renderer."""
+class VersionTestCase(TestCase):
+    """Test presence of package version."""
 
     def test_version(self):
-        from django_charting import __version__
+        import django_charting
 
-        parts = __version__.split(".")
-        self.assertEqual(len(parts), 3)
+        version = django_charting.__version__
+        version_parts = version.split(".")
+        self.assertTrue(len(version_parts) >= 2)
