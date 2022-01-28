@@ -1,7 +1,7 @@
 from django.utils.text import slugify
 
 
-class BaseColumn(object):
+class BaseColumn:
     _sort_by_creation = 0
     type = None
     accessor = None

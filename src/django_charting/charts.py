@@ -4,7 +4,7 @@ from .columns import BaseColumn
 from .utils import get_javascript_object
 
 
-class Chart(object):
+class Chart:
     id = None
     title = None
     data = None
@@ -14,7 +14,7 @@ class Chart(object):
     _id = None
 
     def __init__(self, queryset=None):
-        super(Chart, self).__init__()
+        super().__init__()
         if queryset is not None:
             self.queryset = queryset
 
@@ -23,7 +23,7 @@ class Chart(object):
             if self.id:
                 self._id = self.id
             else:
-                self._id = "django-chart-{uuid}".format(uuid=uuid.uuid4())
+                self._id = f"django-chart-{uuid.uuid4()}"
         return self._id
 
     def get_title(self):
