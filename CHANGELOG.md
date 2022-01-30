@@ -1,6 +1,6 @@
 # Changelog
 
-## 22.1 (in development)
+## 22.1 (2022-01-30)
 
 - Drop support for Python 3.6 and Django 3.1 (#129).
 
