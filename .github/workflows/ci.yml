@@ -13,32 +13,16 @@ jobs:
         python-version: [ "3.7", "3.8", "3.9", "3.10" ]
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3.2.0
-
+      - uses: actions/checkout@v3.2.0
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v2.3.2
         with:
           python-version: ${{ matrix.python-version }}
 
       - name: Install GDAL binaries
-        run: |
-          sudo apt-get install binutils libproj-dev gdal-bin
-
-      - run: pip install -U pip
-      - run: pip install -U tox tox-gh-actions coverage[toml] coveralls
-
-      - name: Test with tox
-        run: tox
-
-      - name: Coverage combine
-        run: coverage combine
-
-      - name: Upload coveralls
-        env:
-          COVERALLS_PARALLEL: true
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: coveralls --service=github
+        run: sudo apt-get install binutils libproj-dev gdal-bin
+      - run: pip install -U pip tox tox-gh-actions
+      - run: tox
 
   tests:
       if: ${{ always() }}
@@ -48,14 +32,3 @@ jobs:
         - name: Check test matrix status
           if: ${{ needs.tests_matrix.result != 'success' }}
           run: exit 1
-
-  coveralls:
-    needs: tests
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Coveralls Finished
-        uses: coverallsapp/github-action@master
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          parallel-finished: true
