@@ -23,7 +23,6 @@ jobs:
         run: sudo apt-get install binutils libproj-dev gdal-bin
       - run: pip install -U pip tox tox-gh-actions
       - run: tox
-      - run: coverage combine
 
   tests:
       if: ${{ always() }}
